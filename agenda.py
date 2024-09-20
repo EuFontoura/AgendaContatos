@@ -33,8 +33,25 @@ def atualizar_telefone_contato(contatos, indice_contato, novo_telefone_contato):
 
 def marcar_favorito(contato, indice_contato):
     indice_contato_ajustado = int(indice_contato) - 1
-    contatos[indice_contato_ajustado]["favorito"] = True
-    print(f"Contato {indice_contato} marcado como favorito.")
+    if contatos[indice_contato_ajustado]["favorito"] == False:
+        contatos[indice_contato_ajustado]["favorito"] = True
+        print(f"Contato {indice_contato} marcado como favorito.")
+    elif contatos[indice_contato_ajustado]["favorito"] == True:
+        contatos[indice_contato_ajustado]["favorito"] = False
+        print(f"Contato {indice_contato} desmarcado como favorito.")
+    return
+
+def ver_lista_favoritos(contatos):
+    print("\nContatos Favoritos:")
+    favoritos = [contato for contato in contatos if contato["favorito"]]  # Filtra os favoritos
+    if not favoritos:
+        print("Nenhum contato favorito encontrado.")
+        return
+
+    for contato in favoritos:
+        nome_contato = contato["contato"]
+        telefone_contato = contato["telefone"]
+        print(f"Nome: {nome_contato} - Telefone: {telefone_contato}")
     return
 
 def deletar_contato(contatos):
@@ -58,9 +75,10 @@ while True:
     print("1. Adicionar Contato")
     print("2. Ver Agenda")
     print("3. Atualizar Contato")
-    print("4. Marcar como Favorito")
-    print("5. Deletar Contato")
-    print("6. Sair")
+    print("4. Marcar ou desmarcar como Favorito")
+    print("5. Ver lista de Favoritos")
+    print("6. Deletar Contato")
+    print("7. Sair")
 
     escolha = input("Digite a sua escolha:")
 
@@ -90,12 +108,15 @@ while True:
 
     elif escolha == "4":
         ver_contatos(contatos)
-        indice_contato = input("Digite o número do contato que deseja marcar como favorito: ")
+        indice_contato = input("Digite o número do contato que deseja marcar ou desmarcar como favorito: ")
         marcar_favorito(contatos, indice_contato)
 
     elif escolha == "5":
+        ver_lista_favoritos(contatos)
+
+    elif escolha == "6":
         ver_contatos(contatos)
         deletar_contato(contatos)
 
-    elif escolha == "6":
+    elif escolha == "7":
         break
